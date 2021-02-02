@@ -53,14 +53,14 @@ status() {
   while read status ; do
     case $status in
       *power*on*) underline=%{u#de935f} ;;
-      *power*off*) underline=%{-u} ;;
+      *power*off*) underline=%{u#cc241d} ;;
       *brightness*) brightness=$(echo $status | awk '-F[:,]' '{ print substr($2,0,5) *100 }') ;;
     esac
   done <<< $($CMD -a) 
 }
 
 update() {
-  echo %{T3}${underline} $brightness\%%{-u}%{T-}
+  echo %{T3}${underline}%{+u} $brightness\%%{-u}%{T-}
 }
 
 main $*
