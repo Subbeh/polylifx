@@ -3,6 +3,7 @@
 CMD='lifx -g Office'
 
 pipe=/tmp/lifx.pipe
+test -e $pipe && rm $pipe
 mkfifo -m 0600 $pipe
 
 declare -i brightness
@@ -19,6 +20,7 @@ main() {
   done &
 
   while read cmd ; do
+    #echo test
     case $cmd in
       toggle) toggle ;;
       up)     brightness up ;;
@@ -31,6 +33,7 @@ toggle() {
   $CMD -T &> /dev/null
   sleep 1
   status && update
+  A
 }
 
 brightness() {
@@ -56,7 +59,7 @@ status() {
       *power*off*) underline=%{u#cc241d} ;;
       *brightness*) brightness=$(echo $status | awk '-F[:,]' '{ print substr($2,0,5) *100 }') ;;
     esac
-  done <<< $($CMD -a) 
+  done <<< $($CMD -a 2> /dev/null) 
 }
 
 update() {
