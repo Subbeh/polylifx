@@ -33,7 +33,6 @@ toggle() {
   $CMD -T &> /dev/null
   sleep 1
   status && update
-  A
 }
 
 brightness() {
